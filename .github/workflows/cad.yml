@@ -1,0 +1,57 @@
+name: cad
+
+on:
+  pull_request:
+    paths: ["cad/**", ".github/workflows/cad.yml"]
+  push:
+    branches: [main]
+    paths: ["cad/**", ".github/workflows/cad.yml"]
+
+jobs:
+  stl:
+    name: STLs rebuild, are closed solids, and print without supports
+    runs-on: ubuntu-24.04
+    env:
+      BLENDER: blender-5.2.2-linux-x64
+      ORCA: OrcaSlicer_Linux_AppImage_Ubuntu2404_V2.4.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checker self-test
+        run: python3 cad/test_checks.py
+
+      - name: Check committed STLs
+        run: python3 cad/check_stl.py cad/stl/*.stl
+
+      - name: Download Blender and OrcaSlicer
+        shell: bash
+        run: |
+          curl -fsSL https://download.blender.org/release/Blender5.2/$BLENDER.tar.xz | tar xJ -C ~
+          mkdir -p ~/orca && cd ~/orca
+          curl -fsSL -o orca.AppImage https://github.com/OrcaSlicer/OrcaSlicer/releases/download/v2.4.2/$ORCA.AppImage
+          chmod +x orca.AppImage && ./orca.AppImage --appimage-extract > /dev/null && rm orca.AppImage
+
+      - name: Runtime libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libsm6 libice6 libxi6 libxkbcommon0 libgl1 libegl1 \
+            libopengl0 libglu1-mesa libwebkit2gtk-4.1-0 libsecret-1-0 libwayland-server0
+
+      - name: Regenerate STLs from the scripts
+        run: |
+          rm -f cad/stl/*.stl   # so a part dropped from the scripts shows up as a deleted file
+          ~/$BLENDER/blender -b --python-exit-code 1 --python cad/build.py
+
+      - name: V1 keep-out check catches a blocked plug
+        run: ~/$BLENDER/blender -b --python-exit-code 1 --python cad/test_v1_keepouts.py
+
+      - name: Committed STLs match the scripts
+        run: |
+          git status --porcelain cad/stl
+          test -z "$(git status --porcelain cad/stl)" || { echo "::error::cad/stl is stale. Rebuild with cad/build.py and commit."; exit 1; }
+
+      - name: Every part slices without supports (Bambu P1P profiles)
+        run: |
+          python3 cad/slice_check.py --orca ~/orca/squashfs-root/bin/orca-slicer \
+            --profiles ~/orca/squashfs-root/resources/profiles/BBL --markdown slice-report.md cad/stl/*.stl
+          cat slice-report.md >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "ready": {
+    "version": 2,
+    "demo": true,
+    "state": "ready",
+    "ssid": "",
+    "message": "Choose a network to begin."
+  },
+  "join": {
+    "ssid": "Synthetic home",
+    "security": "wpa2",
+    "password": "synthetic-only"
+  },
+  "states": ["ready", "connecting", "connected", "failed", "recovery_failed", "persistence_failed"]
+}

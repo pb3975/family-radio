@@ -1,0 +1,18 @@
+[Unit]
+Description=Family Radio local library controller
+After=sound.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=family-radio
+WorkingDirectory=/usr/local/lib/family-radio
+EnvironmentFile=-/var/lib/family-radio/.local/share/family-radio/service.env
+ExecStart=/usr/bin/python3 /usr/local/lib/family-radio/host/radio.py
+KillMode=control-group
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

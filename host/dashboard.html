@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Family Radio | Music for your family</title>
+<style>
+:root{color-scheme:light dark;--bg:#f5f4ef;--panel:#fffefa;--ink:#223831;--muted:#56665e;--line:#d5ddd5;--accent:#29614b;--soft:#e8f0e9;--danger:#923b31;--focus:#267fb0;font:16px/1.5 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main,header,footer{max-width:960px;margin:auto;padding:24px 20px}header{padding-bottom:12px}h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-.04em;margin:4px 0}h2{font-size:1.5rem;margin:0 0 8px}h3{font-size:1.1rem;margin:24px 0 8px}p{margin:6px 0 16px}.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.muted,small{color:var(--muted)}nav{display:flex;gap:12px;flex-wrap:wrap}a{color:var(--accent)}nav a{padding:10px 0;margin-right:16px;text-underline-offset:5px}section{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:24px;scroll-margin-top:20px}.note{background:var(--soft);border-radius:12px;padding:12px 16px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{min-width:0}.fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.fields>label{min-width:0}.wide{grid-column:1/-1}label{display:block;font-size:.9rem;font-weight:600}input,select,button{font:inherit;border:1px solid var(--line);border-radius:9px;min-height:44px}input,select{width:100%;padding:10px 12px;background:var(--panel);color:var(--ink);margin:5px 0 10px}button{padding:9px 14px;background:var(--soft);color:var(--accent);cursor:pointer;font-weight:600}button.primary{background:var(--accent);color:var(--panel);border-color:var(--accent)}button.danger{color:var(--danger);background:transparent}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid var(--focus);outline-offset:3px}ul,ol{list-style:none;padding:0;margin:0}.item{padding:16px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.title{font-weight:650;overflow-wrap:anywhere}.detail{font-size:.875rem;color:var(--muted);overflow-wrap:anywhere}.item form{margin-top:12px}.item form input{flex:1 1 130px;margin:0}.item form label{flex:1 1 170px}.item .row{margin-top:10px}.song{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px}.cover{width:56px;height:56px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font-size:1.8rem;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.song-actions{grid-column:1/-1}.song-actions details,.item details{margin-top:8px}summary{cursor:pointer;color:var(--accent);padding:8px 0}details>form{margin:12px 0}.file-label{display:inline-block;max-width:100%;color:var(--accent);border:1px solid var(--line);padding:9px 14px;border-radius:9px;cursor:pointer;min-height:44px}.file-label{display:inline-flex;align-items:center;font-weight:600;background:var(--soft)}.file-label input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.file-label:focus-within{outline:3px solid var(--focus);outline-offset:3px}.status{position:fixed;left:16px;right:16px;bottom:16px;z-index:2;max-width:640px;margin:0 auto;box-shadow:0 6px 24px rgba(0,0,0,.25);background:var(--ink);color:var(--panel);padding:12px 16px;border-radius:12px;overflow-wrap:anywhere}.status:empty{display:none}[hidden]{display:none!important}footer{font-size:.85rem;color:var(--muted);padding-top:0;padding-bottom:96px}.empty{color:var(--muted);padding:12px 0}.picker{border-top:1px solid var(--line);padding-top:16px;margin-top:24px}.picker .item{display:flex;align-items:center;justify-content:space-between;gap:12px}.picker .title{flex:1}.login{max-width:600px}#artist-search{margin-top:20px}code{overflow-wrap:anywhere}button, a, summary, label{touch-action:manipulation}
+@media(max-width:540px){main,header,footer{padding-left:16px;padding-right:16px}section{padding:18px 16px;border-radius:16px}.fields{grid-template-columns:minmax(0,1fr)}.row{gap:8px}.item form button{flex:1}.item form label{flex-basis:100%}h1{line-height:1.15;margin:10px 0 16px}}
+@media(prefers-color-scheme:dark){:root{--bg:#15221e;--panel:#1d2e27;--ink:#e3ece5;--muted:#b3c2b8;--line:#40544a;--accent:#9fd6b4;--soft:#2c4337;--danger:#ffb4a7;--focus:#8ccef5}button.primary{color:#15221e}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Family Radio · Parent space</div><h1>A little more music.</h1><p class="muted">Choose what your kids can browse, and keep your family library in order.</p><nav aria-label="Music sections"><a href="#spotify">Spotify approvals</a><a href="#local">Local library</a></nav></header>
+<main>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<section id="login" class="login" hidden><h2>Welcome to your parent space</h2><p>Open a fresh login link from the computer running this editor.</p><p><code>python3 host/dashboard.py login-url</code></p><p class="muted">Each link works once and keeps this browser signed in for 30 days. Keep it private.</p><button id="retry">Try again</button></section>
+<div id="editor" hidden>
+<p><button id="refresh">Refresh music lists</button></p>
+<section id="spotify" aria-labelledby="spotify-title">
+<div class="eyebrow">Music from Spotify</div><h2 id="spotify-title">Approved for the radio</h2>
+<p>Approval edits reach the radio within a few seconds. Playlists follow changes you make in Spotify.</p>
+<p class="note">Only playlists you own or collaborate on can be played with Spotify's development mode.</p>
+<h3>Add a playlist or artist</h3>
+<form id="add-approval"><div class="fields"><label>Music type<select name="kind"><option value="playlist">Playlist</option><option value="artist">Artist</option></select></label><label>Label (optional)<input name="label" maxlength="256" placeholder="A familiar name"></label><label class="wide">Spotify share link, URI or ID<input name="identity" required maxlength="2048" placeholder="https://open.spotify.com/playlist/…" autocapitalize="none" spellcheck="false"></label></div><button class="primary">Add approval</button></form>
+<h3>Playlists <span id="playlist-count" class="muted"></span></h3><ul id="playlists"></ul>
+<h3>Artists <span id="artist-count" class="muted"></span></h3><ul id="artists"></ul>
+<div id="pickers" class="picker" hidden>
+<h3>From your Spotify account</h3><button id="your-playlists">Show your playlists</button><ul id="playlist-results"></ul>
+<form id="artist-search"><label>Find an artist<input name="q" required maxlength="256" placeholder="Artist name"></label><button>Search artists</button></form><ul id="artist-results"></ul>
+</div>
+</section>
+<section id="local" aria-labelledby="local-title">
+<div class="eyebrow">Your own songs</div><h2 id="local-title">Family library <span id="song-count" class="muted"></span></h2>
+<p class="note">New or changed songs and covers reach the radio after it restarts. Unplug the radio and plug it back in when you are ready.</p>
+<p class="muted">Songs play in this order. MP3 and WAV files, up to 200 MiB each.</p>
+<label class="file-label">Add songs<input id="audio-files" type="file" accept=".mp3,.wav,audio/mpeg,audio/wav" multiple></label>
+<ol id="songs"></ol>
+</section>
+</div>
+</main>
+<footer>Private music management. Spotify account setup uses the existing local CLI.</footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+let state;
+let busy = false;
+function el(tag, text, cls) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (cls) node.className = cls;
+  return node;
+}
+function message(text) { $('status').textContent = text; }
+async function api(path, options = {}) {
+  let response;
+  try { response = await fetch(path, {credentials: 'same-origin', ...options}); }
+  catch { throw new Error('Cannot reach the editor. Check that it is running, then try again.'); }
+  const data = await response.json();
+  if (response.status === 401 && !path.includes('/spotify/')) {
+    $('editor').hidden = true;
+    $('login').hidden = false;
+  }
+  if (response.status === 409) await load();
+  if (!response.ok) throw new Error(data.error || 'Could not save. Try again.');
+  return data;
+}
+async function task(work) {
+  if (busy) return;
+  busy = true;
+  document.querySelectorAll('button,input,select').forEach(n => n.disabled = true);
+  try { await work(); }
+  catch (error) { message(error.message || 'Connection lost. Reload the page and try again.'); }
+  finally {
+    busy = false;
+    document.querySelectorAll('button,input,select').forEach(n => n.disabled = n.dataset.unavailable === 'true');
+  }
+}
+function button(text, work, cls) {
+  const node = el('button', text, cls);
+  node.type = 'button';
+  node.addEventListener('click', () => task(work));
+  return node;
+}
+function input(labelText, value, name, maximum = 4096) {
+  const label = el('label', labelText);
+  const field = el('input');
+  field.value = value || '';
+  field.name = name;
+  field.maxLength = maximum;
+  label.append(field);
+  return label;
+}
+function age(timestamp) {
+  if (timestamp === null) return '';
+  const seconds = Math.max(0, state.now - timestamp);
+  if (seconds < 60) return 'Refreshed just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `Refreshed ${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `Refreshed ${hours} hours ago`;
+  return `Refreshed ${Math.floor(hours / 24)} days ago`;
+}
+async function post(path, value) {
+  const result = await api(path, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(value)});
+  await load();
+  message(result.message);
+}
+function approvalChange(action, item, label) {
+  return post('/api/approvals', {action, kind: item.kind, identity: item.id, label, revision: state.approvals.revision});
+}
+function renderApprovals() {
+  for (const kind of ['playlist', 'artist']) {
+    const list = $(kind + 's');
+    list.replaceChildren();
+    const items = state.approvals.approvals.filter(item => item.kind === kind);
+    $(kind + '-count').textContent = `(${items.length})`;
+    if (!items.length) list.append(el('li', `No ${kind}s approved yet. Add one above.`, 'empty'));
+    for (const item of items) {
+      const row = el('li', undefined, 'item');
+      row.append(el('div', item.name, 'title'));
+      row.append(el('div', item.track_count === null ? item.status : `${item.track_count} tracks · ${age(item.verified_at)} · ${item.status}`, 'detail'));
+      const details = el('details');
+      details.append(el('summary', 'Rename or remove'));
+      const form = el('form', undefined, 'row');
+      form.append(input('Label', item.label || item.name, 'label', 256));
+      form.elements.label.required = true;
+      const save = el('button', 'Save label');
+      form.append(save, button('Remove', async () => {
+        if (confirm(`Remove ${item.name} from approved ${kind}s?`)) await approvalChange('remove', item);
+      }, 'danger'));
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const label = form.elements.label.value.trim();
+        task(() => approvalChange('rename', item, label));
+      });
+      details.append(form);
+      row.append(details);
+      list.append(row);
+    }
+  }
+  $('pickers').hidden = !state.spotify_authorized;
+}
+function duration(seconds) {
+  const total = Math.round(seconds);
+  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
+}
+async function libraryChange(action, song, fields = {}) {
+  await post('/api/library', {action, id: song.id, revision: state.library.revision, ...fields});
+}
+async function upload(path, file, headers) {
+  const result = await api(path, {method: 'POST', headers: {...headers, 'X-Library-Revision': state.library.revision}, body: file});
+  await load();
+  message(result.message);
+}
+function renderSongs() {
+  const list = $('songs');
+  list.replaceChildren();
+  const songs = state.library.songs;
+  $('song-count').textContent = `(${songs.length})`;
+  if (!songs.length) list.append(el('li', 'Your library is ready for its first song.', 'empty'));
+  songs.forEach((song, index) => {
+    const row = el('li', undefined, 'item song');
+    const art = el('div', '♪', 'cover');
+    art.setAttribute('aria-hidden', 'true');
+    if (song.cover) {
+      const image = el('img');
+      image.alt = '';
+      image.loading = 'lazy';
+      image.src = '/api/library/cover?' + new URLSearchParams({id: song.id, v: song.cover});
+      image.addEventListener('error', () => art.replaceChildren(document.createTextNode('♪')));
+      art.replaceChildren(image);
+    }
+    const info = el('div');
+    info.append(el('div', `${index + 1}. ${song.title}`, 'title'), el('div', [song.artist, duration(song.duration)].filter(Boolean).join(' · '), 'detail'));
+    const actions = el('div', undefined, 'song-actions');
+    const moves = el('div', undefined, 'row');
+    for (const [label, direction, unavailable] of [['Move up', -1, index === 0], ['Move down', 1, index === songs.length - 1]]) {
+      const move = button(label, () => libraryChange('move', song, {direction}));
+      move.setAttribute('aria-label', `${label}: ${song.title}`);
+      move.dataset.unavailable = String(unavailable);
+      move.disabled = unavailable;
+      moves.append(move);
+    }
+    const details = el('details');
+    details.append(el('summary', 'Edit song or cover'));
+    const form = el('form');
+    const fields = el('div', undefined, 'fields');
+    fields.append(input('Title', song.title, 'title'), input('Artist (optional)', song.artist, 'artist'));
+    form.append(fields, el('button', 'Save song'));
+    form.elements.title.required = true;
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const fields = {title: form.elements.title.value.trim(), artist: form.elements.artist.value.trim()};
+      task(() => libraryChange('edit', song, fields));
+    });
+    const cover = el('label', 'Change cover (PNG, JPEG or WebP, up to 16 MiB)', 'file-label');
+    const file = el('input');
+    file.type = 'file';
+    file.accept = 'image/png,image/jpeg,image/webp';
+    file.addEventListener('change', () => {
+      const selected = file.files[0];
+      if (selected) task(async () => {
+        if (selected.size > 16 * 1024 * 1024) throw new Error('Choose a cover smaller than 16 MiB.');
+        message('Preparing the cover and audio levels. This can take a moment.');
+        await upload('/api/library/cover', selected, {'Content-Type': selected.type, 'X-Song-Id': song.id});
+      });
+    });
+    cover.append(file);
+    details.append(form, cover, el('p', 'Removing a song keeps its audio file on disk for rollback.', 'detail'), button('Remove song', async () => {
+      if (confirm(`Remove ${song.title} from the library? Its audio file stays on disk.`)) await libraryChange('remove', song);
+    }, 'danger'));
+    actions.append(moves, details);
+    row.append(art, info, actions);
+    list.append(row);
+  });
+}
+async function load() {
+  state = await api('/api/state');
+  $('login').hidden = true;
+  $('editor').hidden = false;
+  renderApprovals();
+  renderSongs();
+}
+$('retry').addEventListener('click', () => task(load));
+$('refresh').addEventListener('click', () => task(async () => { await load(); message('Music lists refreshed.'); }));
+$('add-approval').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const fields = Object.fromEntries(new FormData(form));
+  task(async () => {
+    await post('/api/approvals', {...fields, label: fields.label.trim() || null, action: 'add', revision: state.approvals.revision});
+    form.reset();
+  });
+});
+function results(listId, items, kind) {
+  const list = $(listId);
+  list.replaceChildren();
+  if (!items.length) list.append(el('li', 'No results found. You can still paste a link above.', 'empty'));
+  for (const item of items) {
+    const row = el('li', undefined, 'item');
+    const approved = state.approvals.approvals.some(a => a.kind === kind && a.id === item.id);
+    const blocked = item.playable === false;
+    const add = button(approved ? 'Added' : blocked ? 'Not yours' : 'Add', async () => {
+      await post('/api/approvals', {action: 'add', kind, identity: item.id, label: item.name.slice(0, 256), revision: state.approvals.revision});
+      results(listId, items, kind);
+    });
+    add.dataset.unavailable = String(approved || blocked);
+    add.disabled = approved || blocked;
+    const info = el('div', undefined, 'title');
+    info.append(el('div', item.name));
+    if (blocked) info.append(el('div', 'Followed, not owned. Spotify will not let the radio play it.', 'detail'));
+    row.append(info, add);
+    list.append(row);
+  }
+}
+$('your-playlists').addEventListener('click', () => task(async () => {
+  message('Loading your playlists…');
+  const data = await api('/api/spotify/playlists');
+  results('playlist-results', data.items, 'playlist');
+  message('Your playlists are ready. Choose Add to approve one.');
+}));
+$('artist-search').addEventListener('submit', event => {
+  event.preventDefault();
+  const q = event.currentTarget.elements.q.value.trim();
+  task(async () => {
+    message('Finding artists…');
+    const data = await api('/api/spotify/artists?' + new URLSearchParams({q}));
+    results('artist-results', data.items, 'artist');
+    message('Showing up to 10 artists. Use a more specific name if needed.');
+  });
+});
+$('audio-files').addEventListener('change', event => {
+  const files = [...event.currentTarget.files];
+  task(async () => {
+    let completed = 0;
+    for (const file of files) {
+      if (file.size > 200 * 1024 * 1024) throw new Error(`${file.name} is larger than 200 MiB. ${completed} songs added.`);
+      message(`Adding ${completed + 1} of ${files.length}: ${file.name}. Checking the full song…`);
+      try { await upload('/api/library/audio', file, {'Content-Type': 'application/octet-stream', 'X-Filename': encodeURIComponent(file.name)}); }
+      catch (error) { throw new Error(`${file.name}: ${error.message} ${completed} songs added.`); }
+      completed++;
+    }
+    message(`${completed} songs added. Restart the radio when you are ready.`);
+    $('audio-files').value = '';
+  });
+});
+task(load);
+</script>
+</body>
+</html>

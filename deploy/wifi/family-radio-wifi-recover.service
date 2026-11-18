@@ -1,0 +1,12 @@
+[Unit]
+Description=Recover an interrupted Family Radio Wi-Fi setup
+Requires=NetworkManager.service
+After=NetworkManager.service
+Before=family-radio-wifi.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -B /usr/local/lib/family-radio/host/wifi_setup.py recover
+
+[Install]
+WantedBy=multi-user.target

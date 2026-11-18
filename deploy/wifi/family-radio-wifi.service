@@ -1,0 +1,21 @@
+[Unit]
+Description=Manually activated Family Radio Wi-Fi setup
+Requires=NetworkManager.service
+After=NetworkManager.service family-radio-wifi-recover.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -B /usr/local/lib/family-radio/host/wifi_setup.py serve
+ExecStopPost=/usr/bin/python3 -B /usr/local/lib/family-radio/host/wifi_setup.py recover
+RuntimeDirectory=family-radio-wifi
+RuntimeDirectoryMode=0750
+Group=family-wifi
+TimeoutStopSec=150
+KillMode=mixed
+RuntimeMaxSec=660
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/run/family-radio-wifi-status /var/lib/family-radio-wifi /run/family-radio-wifi /run/NetworkManager/system-connections /etc/NetworkManager/system-connections

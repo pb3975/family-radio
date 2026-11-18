@@ -1,0 +1,64 @@
+{
+  "ready": "B7\tREADY\n",
+  "snapshot": "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tSynthetic song\t-\tN\t1\t0\t1\t0\t0\tSynthetic song\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t1\t\t\t\t\tL\tREADY\n",
+  "events": [
+    "B7\tE\t0123456789abcdef\t1\tK\t1\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t2\tP\t1\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t3\tH\t0\tN\t1\n"
+  ],
+  "invalid": [
+    "B7\tE\t0123456789abcdef\t3\tP\t1\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tK\t21\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tL\t4\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tQ\t2\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tK\t1\tA\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tP\t-1\tN\t1\n",
+    "B7\tE\t0123456789abcdef\t4\tL\t0\tN\t2147483648\n",
+    "B7\tE\t0123456789abcdef\t4\tP\t0\tA\t999\n"
+  ],
+  "catalog_cases": [
+    {
+      "record": "B7\tE\t0123456789abcdef\t4\tL\t1\tN\t1\n",
+      "mode": "A",
+      "shuffle": false
+    },
+    {
+      "record": "B7\tE\t0123456789abcdef\t5\tP\t0\tA\t2\n",
+      "mode": "B",
+      "shuffle": false
+    },
+    {
+      "record": "B7\tE\t0123456789abcdef\t6\tP\t0\tB\t3\n",
+      "mode": "N",
+      "shuffle": false
+    },
+    {
+      "record": "B7\tE\t0123456789abcdef\t7\tQ\t1\tN\t5\n",
+      "mode": "N",
+      "shuffle": true
+    },
+    {
+      "record": "B7\tE\t0123456789abcdef\t8\tL\t0\tN\t6\n",
+      "mode": "B",
+      "shuffle": true
+    },
+    {
+      "record": "B7\tE\t0123456789abcdef\t9\tL\t-1\tB\t7\n",
+      "mode": "N",
+      "shuffle": true
+    }
+  ],
+  "art_chunk": "B7\tA\t0123456789abcdef\t1\te2ce1e0a\t0\t000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n",
+  "art_complete": "B7\tC\t0123456789abcdef\t1\te2ce1e0a\n",
+  "art_progress": "B7\tO\t0123456789abcdef\t1\te2ce1e0a\t96\n",
+  "source_states": [
+    "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tNo songs\t-\tP\t0\t0\t0\t0\t0\tNo playlists\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t0\t\t\t\t\tS\tLOADING\n",
+    "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tNo songs\t-\tP\t0\t0\t0\t0\t0\tNo playlists\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t0\t\t\t\t\tS\tEMPTY\n",
+    "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tNo songs\t-\tP\t0\t0\t0\t0\t0\tNo playlists\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t0\t\t\t\t\tS\tOFFLINE\n",
+    "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tNo songs\t-\tP\t0\t0\t0\t0\t0\tNo playlists\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t0\t\t\t\t\tS\tAUTH\n",
+    "B7\tS\t0123456789abcdef\tSTOPPED\t60\t100\tNo songs\t-\tP\t0\t0\t0\t0\t0\tNo playlists\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t1\t0\t\t\t\t\tS\tERROR\n"
+  ],
+  "synthetic": true,
+  "wifi_request": "B7\tW\t0123456789abcdef\t1\t1\tS\t-\n",
+  "wifi_ready": "B7\tW\t0123456789abcdef\t1\t11111111111111111111111111111111\t1\tREADY\t600\t46616d696c792d526164696f2d44454d4f\t73796e7468657469632d6f6e6c792d32342d706173736b6579\t574946493a543a5750413b533a46616d696c792d526164696f2d44454d4f3b503a73796e7468657469632d6f6e6c792d32342d706173736b65793b3b\t-\n"
+}

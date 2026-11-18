@@ -1,0 +1,124 @@
+name: Verify radio controller
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  wifi-portal:
+    name: Offline Wi-Fi setup portal
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Setup state, retry, credential privacy and HTTP boundaries
+        run: |
+          python3 -m unittest discover -s tests -p test_wifi_portal.py -v
+          python3 -m unittest discover -s tests -p test_wifi_network.py -v
+          python3 -m unittest discover -s tests -p test_wifi_control.py -v
+      - name: Install native offline artifact validators
+        run: sudo apt-get update && sudo apt-get install -y network-manager dnsmasq-base nftables
+      - name: Validate keyfiles, units, scoped DNS/DHCP and isolation syntax
+        run: sudo python3 tools/check_wifi_artifacts.py
+      - name: Install pinned browser test tooling outside the source tree
+        run: |
+          npm install --prefix "${{ runner.temp }}/wifi-browser" playwright@1.63.0
+          "${{ runner.temp }}/wifi-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Drive setup, wrong-password recovery and mobile manual entry
+        env:
+          PLAYWRIGHT_MODULE: '${{ runner.temp }}/wifi-browser/node_modules/playwright'
+        run: |
+          node tools/check_wifi_portal.cjs --output "${{ runner.temp }}/wifi-portal-ui"
+          node tools/check_wifi_portal.cjs --radio-fixture --output "${{ runner.temp }}/wifi-portal-ui/radio"
+  approvals:
+    name: Offline parent approval management
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Approval CLI persistence, validation, revision conflicts and export
+        run: python3 -m unittest discover -s tests -p test_approvals.py -v
+  spotify:
+    name: Offline Spotify feature guards
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: sudo apt-get update && sudo apt-get install -y mpv ffmpeg
+      - name: PKCE, token refresh, complete catalogs and account-market identities
+        run: |
+          test -s tests/test_spotify.py
+          python3 -m unittest discover -s tests -p test_spotify.py -v
+      - name: Audio ownership, detached pause, revocation and B8 source controls
+        run: |
+          test -s tests/test_playback.py
+          test -s tests/test_b6.py
+          python3 -m unittest discover -s tests -p test_playback.py -v
+          python3 -m unittest discover -s tests -p test_b6.py -v
+  dashboard:
+    name: Offline parent dashboard
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: HTTP access, revision conflicts, Spotify pickers and local audio and cover uploads
+        run: python3 -m unittest discover -s tests -p test_dashboard.py -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned browser test tooling outside the source tree
+        run: |
+          npm install --prefix "${{ runner.temp }}/dashboard-browser" playwright@1.63.0
+          "${{ runner.temp }}/dashboard-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Drive sign-in, approvals, song uploads, covers, conflicts, picker and phone layouts
+        env:
+          PLAYWRIGHT_MODULE: '${{ runner.temp }}/dashboard-browser/node_modules/playwright'
+        run: node tools/check_dashboard.cjs --output "${{ runner.temp }}/dashboard-ui"
+  host:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: sudo apt-get update && sudo apt-get install -y mpv ffmpeg
+      - name: Clock synchronization, unknown time, DST and civil-date boundaries
+        run: python3 -m unittest discover -s tests -p test_clock.py -v
+      - name: Host, catalog, shuffle, full-volume, menu and artwork transfer regressions
+        run: python3 -m unittest discover -s tests -v
+      - run: git diff --check
+  firmware:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: arduino/setup-arduino-cli@v2
+        with:
+          version: '1.5.1'
+      - run: |
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32@3.3.11
+          arduino-cli lib update-index
+          arduino-cli lib install --no-deps 'M5GFX@0.2.29' 'M5Unified@0.2.22' 'M5Dial@1.0.3'
+      - run: arduino-cli compile --fqbn esp32:esp32:m5stack_dial --build-path '${{ runner.temp }}/family-radio-build' firmware/family_dial
+      - name: Install pinned synthetic QR decoder
+        run: |
+          python3 -m pip install --only-binary=:all: zxing-cpp==3.1.1 Pillow==13.0.0
+      - name: Virtual Dial controls, idle clocks, USB recovery and Wi-Fi setup views
+        run: python3 tools/check_dial_layout.py --output "${{ runner.temp }}/family-radio-layout-ui"
+      - name: Decode the actual circular-screen QR fixtures and check rejection mutations
+        run: python3 tools/check_wifi_qr.py --manifest "${{ runner.temp }}/family-radio-layout-ui/wifi-qr.json" --self-test

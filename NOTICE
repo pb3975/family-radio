@@ -1,0 +1,11 @@
+The MIT license in this repository applies to Family Radio project material.
+
+Development and operation use separately installed tools and libraries. These
+include Python, FFmpeg, mpv, the Linux networking tools, Arduino CLI, the ESP32
+Arduino core, M5GFX, M5Unified, M5Dial, Node.js, Playwright, Chromium, Pillow,
+ZXing-C++, Blender and OrcaSlicer. Each is distributed under its own terms.
+Consult the upstream notices when redistributing a compiled firmware image,
+toolchain or runtime package.
+
+Spotify playback requires a separate service account and authorization.
+Supply music that you have permission to use.

@@ -1,0 +1,14 @@
+table inet family_radio_setup {
+    chain input {
+        type filter hook input priority -10; policy accept;
+        iifname "wlan0" ip daddr 192.168.4.1 udp dport { 53, 67 } accept
+        iifname "wlan0" ip daddr 255.255.255.255 udp dport 67 accept
+        iifname "wlan0" ip daddr 192.168.4.1 tcp dport { 53, 80 } accept
+        iifname "wlan0" drop
+    }
+    chain forward {
+        type filter hook forward priority -10; policy accept;
+        iifname "wlan0" drop
+        oifname "wlan0" drop
+    }
+}

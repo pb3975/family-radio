@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="setup-token" content="__SETUP_TOKEN__">
+<title>Family Radio · Wi-Fi setup</title>
+<link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<main>
+<header><span class="mark" aria-hidden="true">♫</span><span>FAMILY RADIO</span></header>
+<p class="badge">LOCAL DEMO · SYNTHETIC NETWORKS</p>
+<h1>Let’s get connected.</h1>
+<p class="intro">Choose a Wi-Fi network for your radio.</p>
+<p class="notice">This demo runs on your computer. It does not change Wi-Fi. Use a made-up password.</p>
+<section aria-labelledby="nearby-title">
+<div class="section-heading"><h2 id="nearby-title">Nearby networks</h2><button type="button" id="refresh" class="text-button">Refresh</button></div>
+<div id="networks" aria-live="polite"></div>
+</section>
+<form id="join-form">
+<label for="ssid">Network name</label>
+<input id="ssid" name="ssid" required autocomplete="off" placeholder="Choose above or enter a hidden network">
+<label for="security">Security</label>
+<select id="security" name="security"><option value="wpa2">WPA2 Personal</option><option value="open">Open network</option></select>
+<p id="open-warning" class="notice" hidden>An open network does not encrypt Wi-Fi traffic. Choose a protected network when one is available.</p>
+<div id="password-group"><label for="password">Wi-Fi password</label>
+<input id="password" name="password" type="password" autocomplete="off" placeholder="8 to 63 characters">
+<label class="checkbox"><input id="show-password" type="checkbox">Show password</label></div>
+<p class="hint">The Pi Zero 2 W needs a 2.4 GHz network. Business sign-in networks are not supported by this setup flow.</p>
+<button type="submit" id="connect">Connect radio</button>
+</form>
+<div id="status" role="status" aria-live="polite"><strong id="status-title">Ready when you are</strong><p id="status-message">Choose a network to begin.</p></div>
+<p class="footnote">On the radio, the setup network may disappear while it joins your Wi-Fi. Reconnect your phone to the chosen network. Wi-Fi connection alone does not confirm internet access.</p>
+</main>
+</body></html>

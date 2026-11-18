@@ -1,0 +1,55 @@
+{
+  "ready": "B5\tREADY\n",
+  "snapshot": "B5\tS\t0123456789abcdef\tSTOPPED\t60\t100\tSynthetic song\t-\tN\t0\t0\t1\t0\t0\tSynthetic song\t-\t000000000000000000000000\tDemo Artist\tAll songs\t0\t0\t1\t\t\t\t\n",
+  "events": [
+    "B5\tE\t0123456789abcdef\t1\tK\t1\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t2\tP\t-1\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t3\tH\t0\tN\t0\n"
+  ],
+  "invalid": [
+    "B5\tE\t0123456789abcdef\t3\tP\t-1\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tK\t21\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tL\t-1\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tL\t2\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tQ\t2\tN\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tK\t1\tA\t0\n",
+    "B5\tE\t0123456789abcdef\t4\tP\t-1\tN\t1\n",
+    "B5\tE\t0123456789abcdef\t4\tL\t0\tN\t2147483648\n",
+    "B5\tE\t0123456789abcdef\t4\tP\t0\tA\t999\n"
+  ],
+  "art_chunk": "B5\tA\t0123456789abcdef\t0\te2ce1e0a\t0\t000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n",
+  "art_complete": "B5\tC\t0123456789abcdef\t0\te2ce1e0a\n",
+  "art_progress": "B5\tO\t0123456789abcdef\t0\te2ce1e0a\t96\n",
+  "catalog_cases": [
+    {
+      "record": "B5\tE\t0123456789abcdef\t4\tL\t1\tN\t0\n",
+      "mode": "A",
+      "shuffle": false
+    },
+    {
+      "record": "B5\tE\t0123456789abcdef\t5\tP\t0\tA\t1\n",
+      "mode": "B",
+      "shuffle": false
+    },
+    {
+      "record": "B5\tE\t0123456789abcdef\t6\tP\t0\tB\t2\n",
+      "mode": "N",
+      "shuffle": false
+    },
+    {
+      "record": "B5\tE\t0123456789abcdef\t7\tQ\t1\tN\t0\n",
+      "mode": "N",
+      "shuffle": true
+    },
+    {
+      "record": "B5\tE\t0123456789abcdef\t8\tL\t0\tN\t0\n",
+      "mode": "B",
+      "shuffle": true
+    },
+    {
+      "record": "B5\tE\t0123456789abcdef\t9\tL\t-1\tB\t3\n",
+      "mode": "N",
+      "shuffle": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=Local radio account Wi-Fi setup control
+
+[Socket]
+ListenStream=/run/family-radio-wifi-radio/control.sock
+SocketUser=root
+SocketGroup=family-wifi-ctl
+SocketMode=0660
+DirectoryMode=0755
+RemoveOnStop=yes
+
+[Install]
+WantedBy=sockets.target

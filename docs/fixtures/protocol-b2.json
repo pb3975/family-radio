@@ -1,0 +1,13 @@
+{
+  "ready": "B2\tREADY\n",
+  "snapshot": "B2\tS\t0123456789abcdef\tSTOPPED\t60\t95\tSynthetic song\t-\tN\t0\t0\t1\t0\t0\tSynthetic song\n",
+  "events": [
+    "B2\tE\t0123456789abcdef\t1\tK\t1\tN\n",
+    "B2\tE\t0123456789abcdef\t2\tP\t-1\tN\n",
+    "B2\tE\t0123456789abcdef\t3\tH\t0\tN\n"
+  ],
+  "invalid": [
+    "B2\tE\t0123456789abcdef\t3\tP\t-1\tN\n",
+    "B2\tE\t0123456789abcdef\t4\tK\t21\tN\n"
+  ]
+}

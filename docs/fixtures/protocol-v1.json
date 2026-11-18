@@ -1,0 +1,11 @@
+{
+  "version": "B1",
+  "ready": "B1\tREADY\n",
+  "snapshot": "B1\tS\t0123456789abcdef\tSTOPPED\t10\t40\tSynthetic song\t-\n",
+  "events": [
+    "B1\tE\t0123456789abcdef\t1\tH\t0\n",
+    "B1\tE\t0123456789abcdef\t2\tV\t2\n",
+    "B1\tE\t0123456789abcdef\t3\tT\t0\n"
+  ],
+  "invalid": ["B2\tREADY\n", "B1\tE\t0123456789abcdef\t4\tV\t999\n"]
+}
