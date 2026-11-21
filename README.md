@@ -17,6 +17,7 @@ python3 host/dashboard.py serve --data-dir "$demo_dir"
 Open the single-use login link printed in the terminal. Press Ctrl+C to stop the server.
 
 ## Build and hardware status
+Start with the [V1 bill of materials](docs/bill-of-materials.md) for parts, tools and printable enclosure files.
 
 The original prototype demonstrated stereo playback, browsing, selection, skipping and quiet pause on hardware. This public edition has different service and device names. Its host and firmware have not been tested together on a physical radio. Check the fit coupons against your own parts before printing a full enclosure.
 
